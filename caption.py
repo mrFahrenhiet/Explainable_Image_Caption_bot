@@ -1,7 +1,9 @@
 from tqdm import tqdm
-
+from dataset import Vocabulary
 from model import *
 from utils import *
+import torchvision.transforms as T
+from PIL import Image
 
 
 # Will only work for batch size 1
@@ -51,8 +53,16 @@ def plot_attention(img, target, attention_plot):
     plt.show()
 
 
+def plot_caption_with_attention(img_pth, transforms_=None):
+    img = Image.open(img_pth)
+    img = transforms_(img)
+    img.unsqueeze_(0)
+    caps, attention = get_caps_from(img)
+    plot_attention(img[0], caps, attention)
+
+
 if __name__ == "__main__":
-    state_checkpoint = torch.load("/content/attention_model_state.pth")  # change paths
+    state_checkpoint = torch.load("/content/attention_model_state.pth", map_location=device)  # change paths
 
     # model params
     vocab = state_checkpoint['vocab']
@@ -75,3 +85,12 @@ if __name__ == "__main__":
                            embeddings=embed_wts).to(device)
 
     model.load_state_dict(state_checkpoint['state_dict'])
+
+    transforms = T.Compose([
+        T.Resize((224, 224)),
+        T.ToTensor(),
+        T.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
+    ])
+
+    img_path = ""
+    plot_caption_with_attention(img_path, transforms)
