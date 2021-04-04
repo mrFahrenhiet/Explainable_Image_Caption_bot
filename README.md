@@ -31,19 +31,48 @@ Here are some captions generated on test images not seen during training or vali
 
 ![](./imgs/Slide5.JPG)
 
+
 ## Model Description
 The model basically has 3 parts :-
-- Encoder: We encode the image in 49 x 2048 size vector
+- Encoder: We encode the image in 49 x 2048 size vector using a pretrained ResNet-50 architechture
 - Attention: attention make use of 49 layers of encoded image to calculate context vectors
   which are to be passed on to the decoder.
-- Decoder: Each LSTM cell in the decoder recieves the context vector and given that and 
+- Decoder: Each LSTM cell in the decoder recieves the context vector and given that, and 
 the previous word predicted the decoder tries to predict the next word of the caption.
 
 ![](imgs/model_arch.jpeg)<br>
 *Credits: Show, Attend and Tell paper*
 
+
 ## Dataset Description
+For this implementation I used the flickr8k dataset which contains a total of
+8091 images and every image has 5 captions. For training, we used 7511 images and for
+validation we used 580 images. The results section gives a breif about the results we obtained and
+the metrics we used for evaluation.
+
+## Results
+The metrics used for evaluation were cross entropy loss and BLEU score. The loss was used for both training and validation.
+I calculated the BLEU score over 580 images with 5 captions each. The model was trained for 50 epochs the best result
+was achieved in the 45th epoch. The graphs below explains the decrement of training and validation loss over the course
+of training the model.
+
+![losses Graph](imgs/losses.png)
+
+The table belows shows the BLUE score our model obtained during the testing phase.
+The bleu score implementation can be found in this [jupyter notebook](https://colab.research.google.com/drive/1v6O3u3psYxBswR51HPIcSbMzjQFMhbsp?usp=sharing)
+
+### Flickr8K model 
+
+| Torch metric | Score   |
+|--------------|---------|
+| BLEU-1       |  0.53515 |
+| BLEU-2       |  0.35395 |
+| BLEU-3       |  0.23636 |
+| BLEU-4       |  0.15749 |
+
+## Deployment Senario
 **TO DO**
+
 
 ## Colab Notebooks and Datasets
 The colab notebooks used for training procedures and datasets used in the development
