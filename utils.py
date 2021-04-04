@@ -1,7 +1,6 @@
 from matplotlib import pyplot as plt
 import torch
 import numpy as np
-from nltk.translate.bleu_score import sentence_bleu
 
 
 def show_img(img, caption):

@@ -1,3 +1,4 @@
+from nltk.translate.bleu_score import corpus_bleu
 from tqdm import tqdm
 from dataset import Vocabulary
 from model import *
@@ -6,24 +7,33 @@ import torchvision.transforms as T
 from PIL import Image
 import argparse
 
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
 
 # Will only work for batch size 1
-def get_bleu_score(dataset, img, target, model, vocab=None):
+def get_all_captions(img, model, vocab=None):
     features = model.EncoderCNN(img[0:1].to(device))
     caps, alphas = model.DecoderLSTM.gen_captions(features, vocab=vocab)
-    target_ = [[dataset.vocab.itos[i] for i in target[0].tolist() if dataset.vocab.itos[i] not in "<SOS>"]]
-    return sentence_bleu(target_, caps)
+    caps = caps[:-2]
+    return caps
 
 
-def get_batched_bleu(dataloader_eval, dataset, model, vocab=None):
-    bleu = 0
-    for batch in tqdm(dataloader_eval, total=len(dataloader_eval)):
-        img, cap = batch
+def calculate_bleu_score(dataloader, model, vocab):
+    candidate_corpus = []
+    references_corpus = []
+
+    for batch in tqdm(dataloader, total=len(dataloader)):
+        img, cap, all_caps = batch
         img, cap = img.to(device), cap.to(device)
-        bleu += get_bleu_score(dataset, img, cap, model, vocab)
+        caps = get_all_captions(img, model, vocab)
+        candidate_corpus.append(caps)
+        references_corpus.append(all_caps[0])
 
-    bleu /= len(dataloader_eval)
-    print("\nBlue Score: ", bleu * 100)
+    assert len(candidate_corpus) == len(references_corpus)
+    print(f"\nBLEU1 = {corpus_bleu(references_corpus, candidate_corpus, (1, 0, 0, 0))}")
+    print(f"BLEU2 = {corpus_bleu(references_corpus, candidate_corpus, (0.5, 0.5, 0, 0))}")
+    print(f"BLEU3 = {corpus_bleu(references_corpus, candidate_corpus, (0.33, 0.33, 0.33, 0))}")
+    print(f"BLEU4 = {corpus_bleu(references_corpus, candidate_corpus, (0.25, 0.25, 0.25, 0.25))}")
 
 
 def get_caps_from(features_tensors, model, vocab=None):
