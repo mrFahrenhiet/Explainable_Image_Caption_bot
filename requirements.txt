@@ -23,7 +23,7 @@ cffi @ file:///C:/ci/cffi_1606255208697/work
 chardet @ file:///C:/ci/chardet_1605303225733/work
 click==7.1.2
 colorama @ file:///home/conda/feedstock_root/build_artifacts/colorama_1602866480661/work
-cryptography==2.9.2
+cryptography==3.3.2
 cycler==0.10.0
 cymem @ file:///C:/ci/cymem_1613319310653/work
 decorator @ file:///home/conda/feedstock_root/build_artifacts/decorator_1617520196422/work
