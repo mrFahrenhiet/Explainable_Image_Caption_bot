@@ -7,7 +7,21 @@ a perticular word, through attention mechanism.<br>
 In this project I have implemented the [Show, Attend and Tell Paper](https://arxiv.org/abs/1502.03044). Using
 [Pytorch](https://github.com/pytorch/pytorch)
 deep learning library.
+## New Streamlit APP
+This project is now deployed as a streamlit app.<br>
+### Instructions to Use:
+```python
+pip install -r requirements.txt
+apt-get install -r packages.txt # Optional way to install wget
+```
 
+```python
+# Note weights will get automatically downloaded.
+# If you have already downloaded, just place 
+# in the path and make the changes in app_streamlit file also
+
+streamlit run app_streamlit.py # Run the app on local machine
+```
 
 ## Overview
 In this project I have implemented the [Show, Attend and Tell Paper](https://arxiv.org/abs/1502.03044)
@@ -69,9 +83,6 @@ The bleu score implementation can be found in this [jupyter notebook](https://co
 | BLEU-2       |  0.35395 |
 | BLEU-3       |  0.23636 |
 | BLEU-4       |  0.15749 |
-
-## Deployment Senario
-**TO DO**
 
 
 ## Colab Notebooks and Datasets

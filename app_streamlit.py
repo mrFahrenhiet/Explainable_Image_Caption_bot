@@ -80,10 +80,17 @@ def get_caps_from(features_tensors, model, vocab=None):
 
 
 def plot_attention(img, target, attention_plot):
+    img[0] = img[0] * 0.229
+    img[1] = img[1] * 0.224
+    img[2] = img[2] * 0.225
+    img[0] += 0.485
+    img[1] += 0.456
+    img[2] += 0.406
     img = img.to('cpu').numpy().transpose((1, 2, 0))
+
     temp_image = img
 
-    fig = plt.figure(figsize=(25, 25))
+    fig = plt.figure(figsize=(10, 10))
     len_caps = len(target)
     for i in range(len_caps):
         temp_att = attention_plot[i].reshape(7, 7)
@@ -102,9 +109,9 @@ def plot_caption_with_attention(img_pth, model, transforms_=None, vocab=None):
     img = transforms_(img)
     img.unsqueeze_(0)
     caption, caps, attention = get_caps_from(img, model, vocab)
-    plot_attention(img[0], caps, attention)
     st.markdown(f"## Image Caption:\n"
                 f" #### {caption[:-5]}\n\n")
+    plot_attention(img[0], caps, attention)
 
 
 @st.cache(ttl=3600, max_entries=10)
@@ -136,6 +143,15 @@ if __name__ == '__main__':
     image = load_output_image(img_pt)
 
     st.sidebar.markdown('''
+    Hello! :hand: and Welcome,
+    This is a Image caption bot:\n
+     Its main job is to give captions :speech_balloon: or description for your
+     input image.\n
+     But we have tried something different here \n
+     This app gives 2 outputs
+    - The Caption for your image duh? :upside_down_face:
+    - Explaination as in a image grid i.e. the parts of the image
+    where the AI looks when trying to caption your image :nerd_face: \n
     If you are getting random captions, then try :-
     - Using a PC
     - Try images of bicycles or motarbikes
@@ -146,7 +162,7 @@ if __name__ == '__main__':
     st.sidebar.markdown('''Check the model details [here](https://github.com/mrFahrenhiet/Explainable_Image_Caption_bot)
     \n Liked it? Give a :star:  on GitHub ''')
 
-    st.image(image, use_column_width=True, caption="Credits @julesmarchioni67 Unsplash")
+    st.image(image, use_column_width=True)
 
     if st.button('Generate captions!'):
         plot_caption_with_attention(img_pt, model, transform_img, vocab)
