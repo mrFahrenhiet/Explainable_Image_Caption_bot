@@ -36,7 +36,7 @@ def download_checkpoints():
     path = "./attention_model_state.pth"
     if not os.path.exists(path):
         with st.spinner('Downloading state checkpoint...'):
-            model_url = "wget -O https://www.dropbox.com/s/6qw5jhumzuu4zzl/attention_model_state.pth?dl=0"
+            model_url = "wget -O ./attention_model_state.pth https://www.dropbox.com/s/6qw5jhumzuu4zzl/attention_model_state.pth?dl=0"
             os.system(model_url)
 
     print("Model Downloaded")
