@@ -44,7 +44,7 @@ def download_checkpoints():
 
 @st.cache()
 def load_model():
-    state_checkpoint = torch.load("/attention_model_state.pth", map_location=device)  # change paths
+    state_checkpoint = torch.load("./attention_model_state.pth", map_location=device)  # change paths
     # model params
     vocab = state_checkpoint['vocab']
     embed_size = 300
