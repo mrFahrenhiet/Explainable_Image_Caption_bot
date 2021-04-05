@@ -8,7 +8,7 @@ In this project I have implemented the [Show, Attend and Tell Paper](https://arx
 [Pytorch](https://github.com/pytorch/pytorch)
 deep learning library.
 ## New Streamlit APP
-This project is now deployed as a streamlit app.<br>
+This project is now deployed as a streamlit app. Click [here](https://share.streamlit.io/mrfahrenhiet/explainable_image_caption_bot/app_streamlit.py) to view it<br>
 ### Instructions to Use:
 ```python
 git clone https://github.com/mrFahrenhiet/Explainable_Image_Caption_bot.git
