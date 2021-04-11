@@ -31,7 +31,7 @@ def transform_img(img):
     return transforms(img)
 
 
-@st.cache()
+@st.cache(ttl=86400, max_entries=15)
 def download_checkpoints():
     path = "./attention_model_state.pth"
     if not os.path.exists(path):
@@ -42,7 +42,7 @@ def download_checkpoints():
     print("Model Downloaded")
 
 
-@st.cache()
+@st.cache(ttl=21600, max_entries=15)
 def load_model():
     state_checkpoint = torch.load("./attention_model_state.pth", map_location=device)  # change paths
     # model params
