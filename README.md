@@ -59,7 +59,7 @@ Here are some captions generated on test images not seen during training or vali
 
 ![](imgs/Slide5.PNG)
 
-![](imgs/Slide5.PNG)
+![](imgs/Slide6.PNG)
 
 
 ## Model Description
