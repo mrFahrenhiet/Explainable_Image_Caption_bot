@@ -1,6 +1,6 @@
 -f https://download.pytorch.org/whl/torch_stable.html
 nltk==3.5
-numpy==1.20.2
+numpy==1.22.0
 wget==3.2
 matplotlib==3.3.2
 streamlit==0.79.0
